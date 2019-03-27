@@ -3,57 +3,17 @@ from flask import Flask, render_template, request, redirect,url_for
 # import yaml
 import pyaudio
 import wave
-import MySQLdb
+# import MySQLdb
+import threading
 app = Flask(__name__)
 
 
-@app.route('/')
-def hello():
-    return render_template('RegForm1.html')
-
-@app.route("/reg", methods=['GET', 'POST'])
-def reg():
-
-    name = request.form['name']
-    roll = request.form['roll']
-    email = request.form['email']
-    clgname = request.form['clgname']
-    bnch = request.form['bnch']
-    Qualification = request.form['Qualification']
-    ph = request.form['ph']
-
-    db = MySQLdb.connect(user='root', password='', host='localhost', database='student')
-    query = "INSERT INTO registration(name,roll,email,clgname,bnch,Qualification,ph) VALUES(%s, %s, %s, %s, %s, %s, %s)"
-    val = (name, roll, email, clgname, bnch, Qualification, ph)
-    ob = db.cursor()
-    ob.execute(query, val)
-    db.commit()
-    ob.close()
-    return render_template("Result.html")
-
-
-
-
-@app.route('/student')
-def users():
-    cur = MySQLdb.connection.cursor()
-    resultValue = cur.execute("SELECT * FROM registration")
-   if resultValue > 0:
-        userDetails = cur.fetchall()
-
-        return render_template('student.html',userDetails=userDetails)
-
-@app.route('/starttest')
-def starttest():
-    return render_template('starttest.html')
-
-@app.route('/Question')
-def Question():
+def demoTask():
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
     CHANNELS = 2
     RATE = 44100
-    RECORD_SECONDS = 5
+    RECORD_SECONDS = 60
 
     WAVE_OUTPUT_FILENAME = "output.wav"
 
@@ -86,6 +46,51 @@ def Question():
     wf.writeframes(b''.join(frames))
     wf.close()
 
+
+@app.route('/')
+def hello():
+    return render_template('RegForm1.html')
+
+    # @app.route("/reg", methods=['GET', 'POST'])
+    # def reg():
+
+    #     name = request.form['name']
+    #     roll = request.form['roll']
+    #     email = request.form['email']
+    #     clgname = request.form['clgname']
+    #     bnch = request.form['bnch']
+    #     Qualification = request.form['Qualification']
+    #     ph = request.form['ph']
+
+    #     db = MySQLdb.connect(user='root', password='', host='localhost', database='student')
+    #     query = "INSERT INTO registration(name,roll,email,clgname,bnch,Qualification,ph) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+    #     val = (name, roll, email, clgname, bnch, Qualification, ph)
+    #     ob = db.cursor()
+    #     ob.execute(query, val)
+    #     db.commit()
+    #     ob.close()
+    #     return render_template("Result.html")
+
+
+
+
+# @app.route('/student')
+# def users():
+#     cur = MySQLdb.connection.cursor()
+#     resultValue = cur.execute("SELECT * FROM registration")
+#     if resultValue > 0 :
+#         userDetails = cur.fetchall()
+#         return render_template('student.html',userDetails=userDetails)
+
+@app.route('/starttest')
+def starttest():
+    return render_template('starttest.html')
+
+@app.route('/Question')
+def Question():
+    t1 = threading.Thread(target=demoTask,args=())
+    t1.start()
+
     # import numpy as np
     # import cv2
     # cap = cv2.VideoCapture(0)
@@ -109,7 +114,7 @@ def Question():
     # cv2.destroyAllWindows()
     # cv2.close()
 
-    return render_template('Question.html',dm =dat)
+    return render_template('Question.html')
 
 @app.route('/done')
 def done():
