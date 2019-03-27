@@ -1,0 +1,81 @@
+<html>
+<head>
+                <title>Start Test</title>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- Latest compiled JavaScript -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+           function startTime()
+                                {
+                                                var today = new Date();
+                                                var h = today.getHours();
+                                                var m = today.getMinutes();
+                                                var s = today.getSeconds();
+                                                m = checkTime(m);
+                                                s = checkTime(s);
+                                                document.getElementById('txt').innerHTML = h + ":" + m + ":" + s;
+                                                var t = setTimeout(startTime, 500);
+                                }
+                                function checkTime(i)
+                                {
+                                                if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                                                return i;
+           }
+   </script>
+</head>
+
+<body onload="startTime()">
+
+
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <a class="navbar-brand" href="#">TRUTH HIRE</a>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+      </li>
+      <li class="nav-item">
+      </li>
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+
+
+
+
+<form >
+                <center>
+                                <h1><strong><div id="txt"></div></strong></h1>
+    </center><br><br>
+        <div id="container" class="container">
+            <h4><b>Some instructions before starting the test</b></h4>
+            <br><br>
+            <h6>1) Before Starting the test  <a href="https://www.hackerrank.com/statuscheck">Check internet connection</a></h6>
+            <h6>2) Check your microphone is working <a href="https://www.onlinemictest.com/">Check microphone</a></h6>
+            <h6>3) Check your webcam is working <a href="https://webcamtests.com/">Check webcam</a></h6>
+            <br>
+            <br>
+            <h4><b>Some warning you should read it before starting the test.</b></h4>
+            <br><br>
+            <h6>1) During the test do not open the new tab if you open test will closed.</h6>
+            <h6>2) Do not move your head system is recognizing your face.</h6>
+            <h6>3) Press F11 before starting the test.</h6>
+            <br>
+            <br>
+            <div class="col-sm-6 offset-sm-3 text-center">
+                <!--<a href="Question.html"><button type = "button" class = "btn btn-primary btn-lg" style="width:300px">-->
+                <a href=" {{ url_for('Question') }} "> <button type = "button" class = "btn btn-primary btn-lg" style="width:300px">Start Your Test!</button></a>
+            </div>
+                </div>
+        </div>
+</form>
+
+
+
+</body>
+</html>
